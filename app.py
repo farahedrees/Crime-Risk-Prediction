@@ -10,7 +10,7 @@ from streamlit_folium import st_folium
 # =========================================================
 
 st.set_page_config(
-    page_title="CrimeGuard AI",
+    page_title="PRISM",
     page_icon="🚨",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -236,7 +236,7 @@ except Exception as e:
 
 st.markdown("""
 <div class="hero-card">
-    <div class="hero-title">🚨 CrimeGuard AI</div>
+    <div class="hero-title">PRISM</div>
     <div class="hero-subtitle">Next-Generation Crime Risk Intelligence & Predictive Analytics</div>
     <div class="badge-live">
         <span class="live-dot"></span>
