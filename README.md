@@ -351,9 +351,9 @@ Public web application
 CrimeGuard AI was built by a five-person capstone team, with work organized across data analysis, supervised modeling, unsupervised hotspot detection, application integration, and deployment/documentation:
 
 - **(Ibrahim)**
-- ** (Farah)**
-- ** (Habiba)**
-- ** (Omnia)**
-- ** (Shorouk)**
+- **(Farah)**
+- **(Habiba)**
+- **(Omnia)**
+- **(Shorouk)**
 
 > **Academic project disclaimer:** CrimeGuard AI is a capstone/educational system. It should not be used as the sole basis for operational policing, personal safety decisions, or resource allocation.
