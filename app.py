@@ -11,24 +11,23 @@ from streamlit_folium import st_folium
 
 st.set_page_config(
     page_title="PRISM",
-    page_icon="🔎",
+    page_icon="🚨",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 
 # =========================================================
-# CUSTOM CSS (NOIR DETECTIVE BOARD / CAUTION TAPE THEME)
+# CUSTOM CSS (TEAL & BRIGHT GREEN GLASSMORPHISM THEME)
 # =========================================================
 
 st.markdown("""
 <style>
     .stApp {
-        background:
-            radial-gradient(circle at 10% 10%, rgba(234, 179, 8, 0.08), transparent 40%),
-            radial-gradient(circle at 90% 90%, rgba(234, 179, 8, 0.06), transparent 40%),
-            linear-gradient(180deg, #0a0a0a 0%, #121212 100%);
-        color: #f1efe9;
+        background: radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.12), transparent 35%),
+                    radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.10), transparent 35%),
+                    #080f1e;
+        color: #f1f5f9;
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
@@ -43,108 +42,71 @@ st.markdown("""
         height: 0px;
     }
 
-    /* ---- Caution tape divider ---- */
-    .tape-strip {
-        height: 14px;
-        width: 100%;
-        background: repeating-linear-gradient(
-            135deg,
-            #f2b705,
-            #f2b705 18px,
-            #111111 18px,
-            #111111 36px
-        );
-        border-radius: 4px;
-        margin: 10px 0 26px 0;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.5);
-    }
-
     .hero-card {
-        position: relative;
-        background:
-            linear-gradient(135deg, rgba(20, 18, 14, 0.96), rgba(40, 32, 10, 0.55)),
-            repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 6px);
-        border: 1px solid rgba(242, 183, 5, 0.35);
-        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(13, 148, 136, 0.25));
+        border: 1px solid rgba(45, 212, 191, 0.3);
+        border-radius: 24px;
         padding: 36px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        margin-bottom: 10px;
-        overflow: hidden;
-    }
-
-    .hero-eyebrow {
-        color: #f2b705;
-        font-size: 13px;
-        font-weight: 800;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 6px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        margin-bottom: 28px;
     }
 
     .hero-title {
-        font-size: 54px;
+        font-size: 42px;
         font-weight: 900;
-        color: #f7f4ec;
+        background: linear-gradient(90deg, #38bdf8, #34d399);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin: 0;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        text-shadow: 0 0 18px rgba(242, 183, 5, 0.25), 2px 2px 0 rgba(0,0,0,0.6);
+        letter-spacing: -1px;
     }
 
     .hero-subtitle {
-        display: inline-block;
-        background: #f7f4ec;
-        color: #0a0a0a;
-        font-weight: 800;
-        font-size: 14px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 6px 14px;
-        margin-top: 12px;
-        border-radius: 2px;
+        color: #94a3b8;
+        font-size: 16px;
+        margin-top: 6px;
     }
 
     .badge-live {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(242, 183, 5, 0.10);
-        color: #f2b705;
-        border: 1px solid rgba(242, 183, 5, 0.4);
+        background: rgba(52, 211, 153, 0.12);
+        color: #34d399;
+        border: 1px solid rgba(52, 211, 153, 0.35);
         padding: 6px 14px;
         border-radius: 999px;
         font-size: 12px;
         font-weight: 700;
-        margin-top: 18px;
-        letter-spacing: 0.5px;
+        margin-top: 16px;
     }
 
     .live-dot {
         width: 8px;
         height: 8px;
-        background: #e11d2e;
+        background: #34d399;
         border-radius: 50%;
-        box-shadow: 0 0 10px #e11d2e;
+        box-shadow: 0 0 10px #34d399;
     }
 
     .kpi-card {
-        background: rgba(20, 18, 14, 0.75);
+        background: rgba(15, 23, 42, 0.65);
         backdrop-filter: blur(12px);
-        border-radius: 14px;
+        border-radius: 20px;
         padding: 22px;
-        border: 1px solid rgba(242, 183, 5, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         transition: all 0.25s ease;
         height: 100%;
     }
 
     .kpi-card:hover {
         transform: translateY(-4px);
-        border-color: rgba(242, 183, 5, 0.5);
-        box-shadow: 0 12px 30px rgba(242, 183, 5, 0.12);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 12px 30px rgba(6, 182, 212, 0.15);
     }
 
     .kpi-title {
-        color: #9c9488;
+        color: #64748b;
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.8px;
@@ -154,60 +116,53 @@ st.markdown("""
     .kpi-val {
         font-size: 28px;
         font-weight: 800;
-        color: #f2b705;
+        color: #38bdf8;
         margin-top: 6px;
     }
 
     div[data-baseweb="select"] > div {
-        background: rgba(20, 18, 14, 0.85) !important;
-        border: 1px solid rgba(242, 183, 5, 0.3) !important;
-        border-radius: 10px !important;
-        color: #f7f4ec !important;
+        background: rgba(15, 23, 42, 0.8) !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
+        border-radius: 12px !important;
+        color: #f8fafc !important;
     }
 
     div[data-baseweb="select"] > div:hover {
-        border-color: #f2b705 !important;
+        border-color: #34d399 !important;
     }
 
     .stButton > button {
         width: 100%;
         height: 56px;
-        border-radius: 4px;
-        background: repeating-linear-gradient(
-            135deg,
-            #f2b705,
-            #f2b705 16px,
-            #d99f04 16px,
-            #d99f04 32px
-        );
-        color: #0a0a0a;
-        border: 1px solid rgba(0,0,0,0.4);
+        border-radius: 16px;
+        background: linear-gradient(90deg, #0284c7, #0d9488, #16a34a);
+        color: #ffffff;
+        border: none;
         font-size: 17px;
-        font-weight: 900;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        box-shadow: 0 10px 25px rgba(242, 183, 5, 0.2);
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
         transition: all 0.25s ease;
     }
 
     .stButton > button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 15px 35px rgba(242, 183, 5, 0.35);
-        color: #0a0a0a;
+        box-shadow: 0 15px 35px rgba(52, 211, 153, 0.4);
+        color: #ffffff;
     }
 
     .risk-box-high {
-        background: linear-gradient(135deg, rgba(225, 29, 46, 0.15), rgba(20, 18, 14, 0.85));
-        border: 1px solid rgba(225, 29, 46, 0.45);
-        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(15, 23, 42, 0.8));
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        border-radius: 20px;
         padding: 28px;
         text-align: center;
     }
 
     .risk-box-low {
-        background: linear-gradient(135deg, rgba(242, 183, 5, 0.12), rgba(20, 18, 14, 0.85));
-        border: 1px solid rgba(242, 183, 5, 0.4);
-        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(15, 23, 42, 0.8));
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        border-radius: 20px;
         padding: 28px;
         text-align: center;
     }
@@ -215,15 +170,15 @@ st.markdown("""
     .risk-score-num {
         font-size: 46px;
         font-weight: 900;
-        color: #f2b705;
-        text-shadow: 0 0 16px rgba(242, 183, 5, 0.3);
+        background: linear-gradient(90deg, #38bdf8, #34d399);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .hotspot-section {
-        background:
-            linear-gradient(135deg, rgba(18, 16, 12, 0.9), rgba(10, 10, 10, 0.6));
-        border: 1px solid rgba(242, 183, 5, 0.18);
-        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(8, 47, 73, 0.45));
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 22px;
         padding: 24px;
         margin-top: 20px;
     }
@@ -232,13 +187,10 @@ st.markdown("""
         font-size: 24px;
         font-weight: 800;
         margin-bottom: 5px;
-        color: #f7f4ec;
-        text-transform: uppercase;
-        letter-spacing: 1px;
     }
 
     .hotspot-subtitle {
-        color: #9c9488;
+        color: #94a3b8;
         font-size: 13px;
         margin-bottom: 18px;
     }
@@ -284,18 +236,14 @@ except Exception as e:
 
 st.markdown("""
 <div class="hero-card">
-    <div class="hero-eyebrow">By Group 5</div>
     <div class="hero-title">PRISM</div>
-    <div class="hero-subtitle">Predictive Risk Intelligence &amp; Spatial Mapping</div>
-    <br>
+    <div class="hero-subtitle">Next-Generation Crime Risk Intelligence & Predictive Analytics</div>
     <div class="badge-live">
         <span class="live-dot"></span>
-        AI SYSTEM ACTIVE &amp; RUNNING
+        AI SYSTEM ACTIVE & RUNNING
     </div>
 </div>
 """, unsafe_allow_html=True)
-
-st.markdown('<div class="tape-strip"></div>', unsafe_allow_html=True)
 
 
 # =========================================================
@@ -308,8 +256,8 @@ with k1:
     st.markdown("""
     <div class="kpi-card">
         <div class="kpi-title">Monitoring Status</div>
-        <div class="kpi-val" style="color:#f2b705;">ACTIVE</div>
-        <div style="color:#9c9488; font-size:12px; margin-top:4px;">Crime intelligence system</div>
+        <div class="kpi-val" style="color:#38bdf8;">ACTIVE</div>
+        <div style="color:#64748b; font-size:12px; margin-top:4px;">Crime intelligence system</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -317,8 +265,8 @@ with k2:
     st.markdown("""
     <div class="kpi-card">
         <div class="kpi-title">Safety Network</div>
-        <div class="kpi-val" style="color:#f2b705;">READY</div>
-        <div style="color:#9c9488; font-size:12px; margin-top:4px;">Spatiotemporal Analysis</div>
+        <div class="kpi-val" style="color:#34d399;">READY</div>
+        <div style="color:#64748b; font-size:12px; margin-top:4px;">Spatiotemporal Analysis</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -326,8 +274,8 @@ with k3:
     st.markdown("""
     <div class="kpi-card">
         <div class="kpi-title">AI Classifiers</div>
-        <div class="kpi-val" style="color:#f2b705;">2 Models</div>
-        <div style="color:#9c9488; font-size:12px; margin-top:4px;">Random Forest + XGBoost</div>
+        <div class="kpi-val" style="color:#2dd4bf;">2 Models</div>
+        <div style="color:#64748b; font-size:12px; margin-top:4px;">Random Forest + XGBoost</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -336,8 +284,8 @@ with k4:
     st.markdown(f"""
     <div class="kpi-card">
         <div class="kpi-title">Spatial Hotspots</div>
-        <div class="kpi-val" style="color:#e11d2e;">{hotspot_count}</div>
-        <div style="color:#9c9488; font-size:12px; margin-top:4px;">DBSCAN clusters detected</div>
+        <div class="kpi-val" style="color:#facc15;">{hotspot_count}</div>
+        <div style="color:#64748b; font-size:12px; margin-top:4px;">DBSCAN clusters detected</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -351,7 +299,7 @@ st.write("")
 # =========================================================
 
 st.markdown(
-    "<h3 style='font-size:20px; font-weight:700; color:#f7f4ec; text-transform:uppercase; letter-spacing:1px;'>🔍 Crime Risk Input Panel</h3>",
+    "<h3 style='font-size:20px; font-weight:700;'>🔍 Crime Risk Input Panel</h3>",
     unsafe_allow_html=True
 )
 
@@ -467,7 +415,7 @@ if analyze:
 if st.session_state.prediction_made:
     st.write("")
     st.markdown(
-        "<h3 style='font-size:20px; font-weight:700; color:#f7f4ec; text-transform:uppercase; letter-spacing:1px;'>📊 Intelligence Assessment</h3>",
+        "<h3 style='font-size:20px; font-weight:700;'>📊 Intelligence Assessment</h3>",
         unsafe_allow_html=True
     )
 
@@ -484,13 +432,13 @@ if st.session_state.prediction_made:
             st.markdown(f"""
             <div class="risk-box-high">
                 <div style="font-size:42px;">⚠️</div>
-                <div style="color:#e11d2e; font-weight:800; font-size:14px; letter-spacing:1px; margin-top:8px;">
+                <div style="color:#ef4444; font-weight:800; font-size:14px; letter-spacing:1px; margin-top:8px;">
                     HIGH RISK LEVEL DETECTED
                 </div>
-                <div style="font-size:22px; font-weight:800; margin-top:4px; color:#f7f4ec;">
+                <div style="font-size:22px; font-weight:800; margin-top:4px;">
                     District {disp_district}
                 </div>
-                <div style="color:#9c9488; font-size:13px; margin-top:8px;">
+                <div style="color:#94a3b8; font-size:13px; margin-top:8px;">
                     Conditions indicate heightened probability of criminal activity around
                     <b>{disp_hour:02d}:00</b>.
                 </div>
@@ -501,13 +449,13 @@ if st.session_state.prediction_made:
             st.markdown(f"""
             <div class="risk-box-low">
                 <div style="font-size:42px;">🛡️</div>
-                <div style="color:#f2b705; font-weight:800; font-size:14px; letter-spacing:1px; margin-top:8px;">
+                <div style="color:#34d399; font-weight:800; font-size:14px; letter-spacing:1px; margin-top:8px;">
                     LOW RISK LEVEL DETECTED
                 </div>
-                <div style="font-size:22px; font-weight:800; margin-top:4px; color:#f7f4ec;">
+                <div style="font-size:22px; font-weight:800; margin-top:4px;">
                     District {disp_district}
                 </div>
-                <div style="color:#9c9488; font-size:13px; margin-top:8px;">
+                <div style="color:#94a3b8; font-size:13px; margin-top:8px;">
                     Normal conditions predicted for <b>{disp_day}</b> at <b>{disp_hour:02d}:00</b>.
                 </div>
             </div>
@@ -518,7 +466,7 @@ if st.session_state.prediction_made:
         <div class="kpi-card" style="text-align:center;">
             <div class="kpi-title">AI Risk Probability Score</div>
             <div class="risk-score-num">{rf_probability:.1f}%</div>
-            <div style="color:#9c9488; font-size:12px;">
+            <div style="color:#64748b; font-size:12px;">
                 Predicted probability from Random Forest
             </div>
         </div>
@@ -532,7 +480,7 @@ if st.session_state.prediction_made:
 # DBSCAN HOTSPOT INTELLIGENCE
 # =========================================================
 
-st.markdown('<div class="tape-strip"></div>', unsafe_allow_html=True)
+st.divider()
 
 st.markdown(
     '<div class="hotspot-section">',
@@ -618,9 +566,7 @@ if hotspots_df is not None and not hotspots_df.empty:
                 max_width=330
             ),
             tooltip=f"{row['hotspot_name']} • {crime_count:,} crimes",
-            color="#f2b705",
             fill=True,
-            fill_color="#e11d2e",
             fill_opacity=0.80,
             weight=1
         ).add_to(crime_map)
@@ -633,7 +579,7 @@ if hotspots_df is not None and not hotspots_df.empty:
     )
 
     st.markdown(
-        "<h3 style='font-size:18px; font-weight:700; margin-top:20px; color:#f7f4ec; text-transform:uppercase; letter-spacing:1px;'>"
+        "<h3 style='font-size:18px; font-weight:700; margin-top:20px;'>"
         "🔥 Highest Crime Hotspots"
         "</h3>",
         unsafe_allow_html=True
@@ -684,8 +630,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 # =========================================================
 
 st.markdown("""
-<div style="text-align:center; color:#5c5548; font-size:12px; margin-top:50px; letter-spacing:1px; text-transform:uppercase;">
-    <b>PRISM</b> &nbsp;•&nbsp;
-    Predictive Risk Intelligence &amp; Spatial Mapping &nbsp;•&nbsp; By Group 5 &nbsp;•&nbsp; 2026
+<div style="text-align:center; color:#475569; font-size:12px; margin-top:50px;">
+    <b>CRIMEGUARD AI</b> &nbsp;•&nbsp;
+    Powered by Machine Learning + Spatial Intelligence &nbsp;•&nbsp; 2026
 </div>
 """, unsafe_allow_html=True)
