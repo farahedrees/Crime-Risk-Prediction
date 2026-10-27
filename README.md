@@ -1,4 +1,4 @@
-# 🚨 CrimeGuard AI
+# CrimeGuard AI
 ### AI-Powered Crime Risk Intelligence & Spatial Hotspot Detection
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
